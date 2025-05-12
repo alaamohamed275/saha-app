@@ -13,3 +13,8 @@ Route::get('/contact', [App\Http\Controllers\HomeController::class, 'contact'])-
 Route::get('/about', function () {
     return view('about');
 })->name('about');
+
+Route::resource('about-us', AboutUsController::class);
+Route::resource('services', ServiceController::class);
+Route::resource('contact-info', ContactInfoController::class);
+Route::resource('contact-messages', ContactMessageController::class);
