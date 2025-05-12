@@ -1,8 +1,7 @@
 @extends('layouts.app')
 @section('content')
-@include('includes.nav')
+    @include('includes.nav')
     <!-- Hero Section with Mission -->
-     @include('includes.about')
    @include('includes.mission')
 
      <!-- Services Section -->
