@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-white">
+<nav class="navbar navbar-expand-lg navbar-light bg-white me-auto">
     <div class="container-fluid">
         {{-- Logo on the right side for RTL --}}
         <a class="navbar-brand" href="{{ route('home') }}">
