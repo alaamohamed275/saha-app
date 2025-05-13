@@ -64,7 +64,7 @@
         }
 
         .form-control {
-            padding:0.9rem .75rem;
+            padding:0.6rem .75rem;
         }
     </style>
 
@@ -117,7 +117,7 @@
                                     <h3 class="fw-bold mb-4 text-end">أرسل لنا رسالة</h3>
                                     <p class="text-muted text-end mb-4">سوف نقوم بالرد عليك في أقرب وقت ممكن</p>
                                     
-                                    <form>
+                                    <!-- <form>
                                         <div class="row g-3 mb-3">
                                             <div class="col-md-6">
                                                 <input type="text" class="form-control" placeholder="الاسم">
@@ -139,6 +139,46 @@
                                             <textarea class="form-control" rows="4" placeholder="الرسالة"></textarea>
                                         </div>
                                         <button type="submit" class="btn btn-remedy w-100 py-3 fw-bold">إرسال</button>
+                                    </form> -->
+                                    @if(session('success'))
+                                        <div class="alert alert-success">
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+                                    <form method="POST" action="{{ route('messages.store') }}">
+                                        @csrf
+
+                                        <div class="mb-3">
+                                            <label for="name">الاسم</label>
+                                            <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="company">الشركة</label>
+                                            <input type="text" name="company" class="form-control" value="{{ old('company') }}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="email">البريد الإلكتروني</label>
+                                            <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="phone">رقم الهاتف</label>
+                                            <input type="text" name="phone" class="form-control" value="{{ old('phone') }}">
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="subject">الموضوع</label>
+                                            <input type="text" name="subject" class="form-control" value="{{ old('subject') }}" required>
+                                        </div>
+
+                                        <div class="mb-3">
+                                            <label for="message">الرسالة</label>
+                                            <textarea name="message" class="form-control" rows="5" required>{{ old('message') }}</textarea>
+                                        </div>
+
+                                       <button type="submit" class="btn btn-remedy w-100 py-3 fw-bold">إرسال</button>
                                     </form>
                                 </div>
                             </div>

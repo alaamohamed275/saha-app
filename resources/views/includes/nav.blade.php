@@ -24,7 +24,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link  fw-bold {{ request()->routeIs('contact') ? 'active' : '' }}" href="{{ route('contact') }}">
+                    <a class="nav-link  fw-bold {{ request()->routeIs('contact-info') ? 'active' : '' }}" href="{{ route('contact-info') }}">
                         التواصل
                     </a>
                 </li>

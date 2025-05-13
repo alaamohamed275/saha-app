@@ -1,6 +1,6 @@
-@extends('layouts.app')
+@extends('layouts.dashboard')
 @section('content')
-<div class="container text-end">
+<div class="container text-start">
     <h2 class="mb-4">معلومات عنا</h2>
     @if($about)
         <div class="card mb-3">
