@@ -12,7 +12,7 @@
             <!-- Image Column -->
             <div class="col-lg-5 col-md-12 text-center mt-lg-0">
                 <div class="">
-                    <img src="/images/g3.png" alt="أشكال دائرية" class="img-fluid">
+                    <img src="/images/g3.png" alt="أشكال دائرية" class="img-fluid w-50">
                 </div>
             </div>
         </div>

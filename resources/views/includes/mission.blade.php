@@ -21,8 +21,12 @@
                     </div>
                 </div>
                 <div class="col-lg-6">
-                    <img src="/images/Rectangle15.png" alt="Remedy Hero Image" class="img-fluid w-70 h-70 object-fit-cover d-block me-auto">
+                    <img src="/images/g1.png" alt="Remedy Hero Image" class="img-fluid w-50 object-fit-cover d-block me-auto">
                 </div>
             </div>
         </div>
     </section>
+
+    <style>
+        
+    </style>
