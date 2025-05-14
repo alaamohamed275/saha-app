@@ -106,4 +106,15 @@ return [
     'record_updated' => 'Record updated successfully',
     'record_deleted' => 'Record deleted successfully',
     'confirm_delete' => 'Are you sure you want to delete this record?',
+
+    'total_users' => 'Total Users',
+    'total_services' => 'Total Services',
+    'total_messages' => 'Total Messages',
+    'total_missions' => 'Total Missions',
+    'recent_messages' => 'Recent Messages',
+    'recent_users' => 'Recent Users',
+    'view_all' => 'View All',
+    'no_recent_messages' => 'No recent messages',
+    'no_recent_users' => 'No recent users',
+    'monthly_stats' => 'Monthly Statistics',
 ];

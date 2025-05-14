@@ -106,4 +106,15 @@ return [
     'record_updated' => 'تم تحديث السجل بنجاح',
     'record_deleted' => 'تم حذف السجل بنجاح',
     'confirm_delete' => 'هل أنت متأكد أنك تريد حذف هذا السجل؟',
+
+     'total_users' => 'إجمالي المستخدمين',
+    'total_services' => 'إجمالي الخدمات',
+    'total_messages' => 'إجمالي الرسائل',
+    'total_missions' => 'إجمالي المهام',
+    'recent_messages' => 'أحدث الرسائل',
+    'recent_users' => 'أحدث المستخدمين',
+    'view_all' => 'عرض الكل',
+    'no_recent_messages' => 'لا توجد رسائل حديثة',
+    'no_recent_users' => 'لا يوجد مستخدمين حديثين',
+    'monthly_stats' => 'إحصائيات شهرية',
 ];

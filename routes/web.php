@@ -14,6 +14,7 @@ use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactMessageController;
 use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\MissionController;
+use App\Http\Controllers\HomeController;
 Route::get('/', function () {
     return view('welcome');
 });

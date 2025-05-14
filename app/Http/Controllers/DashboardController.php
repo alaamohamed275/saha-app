@@ -3,22 +3,24 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Service;
+use App\Models\ContactMessage;
+use App\Models\Mission;
 
 class DashboardController extends Controller
 {
-    public function index()
+     public function index()
     {
-        // Here you would normally fetch data from your database
-        // For this example, we'll use dummy data
-        
-        $data = [
-            'monthly_earnings' => 40000,
-            'annual_earnings' => 215000,
-            'task_percentage' => 50,
-            'pending_requests' => 18,
-            // Add more data as needed
+        $stats = [
+            'users' => User::count(),
+            'services' => Service::count(),
+            'messages' => ContactMessage::count(),
+            'missions' => Mission::count(),
+            'recentMessages' => ContactMessage::latest()->take(5)->get(),
+            'recentUsers' => User::latest()->take(5)->get(),
         ];
-        
-        return view('dashboard.home', $data);
+
+        return view('dashboard.home', compact('stats'));
     }
 }
