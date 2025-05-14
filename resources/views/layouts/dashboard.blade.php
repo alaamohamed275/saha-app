@@ -343,18 +343,12 @@
                         <i class="fas fa-user-circle fa-lg"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <li>
+                        <!-- <li>
                             <a class="dropdown-item" href="{{ route('profile.show') }}">
                                 <i class="fas fa-user me-2"></i>
                                 {{ __('dashboard.profile') }}
                             </a>
-                        </li>
-                        <li>
-                            <a class="dropdown-item" href="{{ route('logs.index') }}">
-                                <i class="fas fa-history me-2"></i>
-                                {{ __('dashboard.activity_log') }}
-                            </a>
-                        </li>
+                        </li> -->
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">

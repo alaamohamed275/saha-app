@@ -7,6 +7,12 @@ use App\Models\ContactMessage;
 use Illuminate\Support\Facades\Mail;
 class ContactMessageController extends Controller
 {
+
+    public function index()
+    {
+        $messages = ContactMessage::latest()->paginate(10);
+        return view('dashboard.messages.index', compact('messages'));
+    }
     public function create()
     {
         return view('dashboard.messages.create'); // عرض نموذج الاتصال
@@ -29,5 +35,18 @@ class ContactMessageController extends Controller
         // Mail::to('admin@example.com')->send(new \App\Mail\ContactMessageMail($contact));
 
         return redirect()->back()->with('success', 'تم إرسال رسالتك بنجاح.');
+    }
+
+     public function destroy(ContactMessage $message)
+    {
+        $message->delete();
+
+        return redirect()->route('messages.index')
+            ->with('success', 'تم حذف الرساله بنجاح');
+    }
+
+      public function show(ContactMessage $message)
+    {
+        return view('dashboard.messages.show', compact('message'));
     }
 }

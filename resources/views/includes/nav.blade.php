@@ -2,7 +2,7 @@
     <div class="container-fluid">
         {{-- Logo on the right side for RTL --}}
         <a class="navbar-brand" href="{{ route('home') }}">
-            <img src="{{ asset('images/logo.png') }}" alt="{{ config('app.name') }}" class="logo" style="max-height: 60px;">
+            <img src="{{ asset('storage/' . $about->logo) }}" alt="{{ config('app.name') }}" class="logo" style="max-height: 60px;">
         </a>
         
         {{-- Toggler Button --}}
@@ -41,7 +41,7 @@
 .nav-link.active {
     color: #00a89d !important;
     font-weight: bold;
-    border-bottom: 2px solid #00a89d;
+    /* border-bottom: 2px solid #00a89d; */
 }
 
 .navbar-brand {

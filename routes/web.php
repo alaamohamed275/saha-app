@@ -16,16 +16,14 @@ use App\Http\Controllers\ServiceController;
 use App\Http\Controllers\MissionController;
 use App\Http\Controllers\HomeController;
 Route::get('/', function () {
-    return view('welcome');
+     return view('home');
 });
 
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/contact-info', [App\Http\Controllers\HomeController::class, 'contact'])->name('contact-info');
-Route::get('/about', function () {
-    return view('about');
-})->name('about');
+Route::get('/about', [App\Http\Controllers\HomeController::class, 'about'])->name('about');
 
 
 

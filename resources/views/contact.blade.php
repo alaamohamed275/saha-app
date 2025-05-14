@@ -66,6 +66,9 @@
         .form-control {
             padding:0.6rem .75rem;
         }
+         .rounded-circle{
+            border-radius: 30% !important;
+        }
     </style>
 
     <!-- Navbar -->
@@ -116,30 +119,15 @@
                                 <div class=" p-4 p-lg-5">
                                     <h3 class="fw-bold mb-4 text-end">أرسل لنا رسالة</h3>
                                     <p class="text-muted text-end mb-4">سوف نقوم بالرد عليك في أقرب وقت ممكن</p>
-                                    
-                                    <!-- <form>
-                                        <div class="row g-3 mb-3">
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" placeholder="الاسم">
-                                            </div>
-                                            <div class="col-md-6">
-                                                <input type="text" class="form-control" placeholder="اسم الشركة">
-                                            </div>
+                                    @if($errors->any())
+                                        <div class="alert alert-danger">
+                                            <ul>
+                                                @foreach ($errors->all() as $error)
+                                                    <li>{{ $error }}</li>
+                                                @endforeach
+                                            </ul>
                                         </div>
-                                        <div class="mb-3">
-                                            <input type="email" class="form-control" placeholder="البريد">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="tel" class="form-control" placeholder="رقم التليفون">
-                                        </div>
-                                        <div class="mb-3">
-                                            <input type="text" class="form-control" placeholder="الموضوع">
-                                        </div>
-                                        <div class="mb-4">
-                                            <textarea class="form-control" rows="4" placeholder="الرسالة"></textarea>
-                                        </div>
-                                        <button type="submit" class="btn btn-remedy w-100 py-3 fw-bold">إرسال</button>
-                                    </form> -->
+                                    @endif
                                     @if(session('success'))
                                         <div class="alert alert-success">
                                             {{ session('success') }}
@@ -183,32 +171,36 @@
                                 </div>
                             </div>
 
-                              <!-- Contact Information Column -->
-                              <div class="col-md-4  text-dark">
+                          <!-- Contact Information Column -->
+                            <div class="col-md-4 text-dark">
                                 <div class="d-flex flex-column justify-content-center h-100 p-3">
                                     <h3 class="mb-4 fw-bold">معلومات التواصل</h3>
+
                                     <div class="mb-4">
                                         <div class="d-flex align-items-center mb-3">
-                                            <div class="rounded-circle bg-remedy-primary p-2 me-3">
+                                            <div class="rounded-circle bg-remedy-primary d-flex justify-content-center align-items-center ms-2" style="width: 40px; height: 40px;">
                                                 <i class="fas fa-phone text-white"></i>
                                             </div>
-                                            <span>099038907896664</span>
+                                            <span>{{ $contact->phone }}</span>
                                         </div>
+
                                         <div class="d-flex align-items-center mb-3">
-                                            <div class="rounded-circle bg-remedy-primary p-2 me-3">
+                                            <div class="rounded-circle bg-remedy-primary d-flex justify-content-center align-items-center ms-2" style="width: 40px; height: 40px;">
                                                 <i class="fas fa-envelope text-white"></i>
                                             </div>
-                                            <span>info@example.com</span>
+                                            <span>{{ $contact->email }}</span>
                                         </div>
+
                                         <div class="d-flex align-items-center">
-                                            <div class="rounded-circle bg-remedy-primary p-2 me-3">
+                                            <div class="rounded-circle bg-remedy-primary d-flex justify-content-center align-items-center ms-2" style="width: 40px; height: 40px;">
                                                 <i class="fas fa-map-marker-alt text-white"></i>
                                             </div>
-                                            <span>مصر</span>
+                                            <span>{{ $contact->address }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>
