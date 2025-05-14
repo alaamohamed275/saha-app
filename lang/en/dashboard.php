@@ -117,4 +117,13 @@ return [
     'no_recent_messages' => 'No recent messages',
     'no_recent_users' => 'No recent users',
     'monthly_stats' => 'Monthly Statistics',
+
+    'about_info' => 'About Us Information',
+    'header' => 'Header',
+    'about_description' => 'Description',
+    'mission' => 'Our Mission',
+    'message' => 'Our Message',
+    'vision' => 'Our Vision',
+    'edit' => 'Edit',
+    'add_info' => 'Add Information',
 ];

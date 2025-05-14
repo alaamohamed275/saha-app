@@ -117,4 +117,13 @@ return [
     'no_recent_messages' => 'لا توجد رسائل حديثة',
     'no_recent_users' => 'لا يوجد مستخدمين حديثين',
     'monthly_stats' => 'إحصائيات شهرية',
+
+    'about_info' => 'معلومات عنا',
+    'header' => 'رأس الصفحة',
+    'about_description' => 'الوصف',
+    'mission' => 'مهمتنا',
+    'message' => 'رسالتنا',
+    'vision' => 'رؤيتنا',
+    'edit' => 'تعديل',
+    'add_info' => 'إضافة معلومات',
 ];

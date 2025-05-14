@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\ContactMessage;
 use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactMessageMail;
+
 class ContactMessageController extends Controller
 {
 
@@ -28,13 +30,23 @@ class ContactMessageController extends Controller
             'subject' => 'required|string|max:255',
             'message' => 'required|string',
         ]);
+        try {
+                $contact = ContactMessage::create($validated);
 
-        $contact = ContactMessage::create($validated);
+                // Send email
+                Mail::to('alaanegm275@gmail.com')
+                    ->send(new ContactMessageMail($contact));
 
-        // إرسال بريد إلكتروني
-        // Mail::to('admin@example.com')->send(new \App\Mail\ContactMessageMail($contact));
-
-        return redirect()->back()->with('success', 'تم إرسال رسالتك بنجاح.');
+                return redirect()->back()
+                    ->with('success', 'تم إرسال رسالتك بنجاح.');
+                    
+            } catch (\Exception $e) {
+                \Log::error('Contact form error: ' . $e->getMessage());
+                
+                return redirect()->back()
+                    ->with('error', 'حدث خطأ أثناء إرسال رسالتك. يرجى المحاولة مرة أخرى.')
+                    ->withInput();
+            }
     }
 
      public function destroy(ContactMessage $message)

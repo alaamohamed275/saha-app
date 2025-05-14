@@ -58,11 +58,17 @@
         html[dir="ltr"] #sidebar {
             left: 0;
             border-right: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateX(calc(var(--sidebar-width) * -1));
         }
         
         html[dir="rtl"] #sidebar {
             right: 0;
             border-left: 1px solid rgba(255, 255, 255, 0.1);
+            transform: translateX(var(--sidebar-width));
+        }
+        
+        #sidebar.show {
+            transform: translateX(0) !important;
         }
         
         .sidebar-brand {
@@ -220,7 +226,7 @@
             }
             
             #sidebar.show {
-                transform: translateX(0);
+                transform: translateX(0) !important;
             }
             
             #main-content {
@@ -343,12 +349,6 @@
                         <i class="fas fa-user-circle fa-lg"></i>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end">
-                        <!-- <li>
-                            <a class="dropdown-item" href="{{ route('profile.show') }}">
-                                <i class="fas fa-user me-2"></i>
-                                {{ __('dashboard.profile') }}
-                            </a>
-                        </li> -->
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form method="POST" action="{{ route('logout') }}">
@@ -427,18 +427,23 @@
             }
         });
         
-        // Handle RTL/LTR specific adjustments
-        function handleDirection() {
-            if (document.documentElement.dir === 'rtl') {
-                // RTL specific adjustments
+        // Initialize sidebar state based on screen size
+        function initSidebar() {
+            if (window.innerWidth >= 992) {
+                document.getElementById('sidebar').classList.add('show');
             } else {
-                // LTR specific adjustments
+                document.getElementById('sidebar').classList.remove('show');
             }
         }
         
+        // Handle window resize
+        window.addEventListener('resize', function() {
+            initSidebar();
+        });
+        
         // Initialize
         document.addEventListener('DOMContentLoaded', function() {
-            handleDirection();
+            initSidebar();
         });
     </script>
     
