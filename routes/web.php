@@ -12,6 +12,8 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ActivityLogController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ContactMessageController;
+use App\Http\Controllers\ServiceController;
+use App\Http\Controllers\MissionController;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -42,6 +44,7 @@ Route::middleware(['auth', 'locale'])->group(function () {
     // Products management
     Route::resource('about-us', AboutUsController::class);
     Route::resource('contact', ContactController::class);
+    Route::resource('missions', MissionController::class);
 
     Route::resource('services', ServiceController::class);
     Route::resource('messages', ContactMessageController::class);

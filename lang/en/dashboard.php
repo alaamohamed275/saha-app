@@ -6,12 +6,13 @@ return [
     'dashboard' => 'Dashboard',
     'home' => 'Home',
     'users' => 'Users',
-    'about-us' => 'about-us',
+    'about_us' => 'about-us',
     'messages' => 'messages',
     'contact' => 'contact',
     'services' => 'services',
     'all_rights_reserved' => 'All Rights Reserved',
-    
+     "missions" => "missions",
+    "mission" => "mission",
     // Search
     'search_placeholder' => 'Search for...',
     

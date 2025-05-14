@@ -4,367 +4,447 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title> {{ __('dashboard.dashboard') }}</title>
+    <title>{{ config('app.name') }} - {{ __('dashboard.dashboard') }}</title>
     
     <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
     <!-- RTL Bootstrap if Arabic -->
     @if(app()->getLocale() == 'ar')
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.rtl.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css">
     @endif
     
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
+    <!-- Google Fonts - Nunito -->
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700&display=swap" rel="stylesheet">
     
     <!-- Custom CSS -->
     <style>
         :root {
             --primary-color: #4e73df;
+            --primary-dark: #224abe;
             --secondary-color: #1cc88a;
             --accent-color: #36b9cc;
             --dark-color: #5a5c69;
             --light-color: #f8f9fc;
             --danger-color: #e74a3b;
             --warning-color: #f6c23e;
+            --sidebar-width: 250px;
+            --topbar-height: 60px;
         }
         
         body {
             font-family: 'Nunito', sans-serif;
             background-color: var(--light-color);
+            padding-top: var(--topbar-height);
         }
         
         /* Sidebar */
-        #sidebar-wrapper {
-            min-height: 100vh;
-            width: 250px;
-            transition: margin 0.25s ease-out;
-            background: linear-gradient(180deg, var(--primary-color) 0%, #224abe 100%);
-            color: white;
+        #sidebar {
+            width: var(--sidebar-width);
+            height: 100vh;
             position: fixed;
+            top: 0;
+            transition: all 0.3s;
             z-index: 1000;
+            background: linear-gradient(180deg, var(--primary-color) 0%, var(--primary-dark) 100%);
+            color: white;
+            overflow-y: auto;
         }
         
-        /* RTL sidebar positioning */
-        html[dir="ltr"] #sidebar-wrapper {
+        /* RTL/LTR positioning */
+        html[dir="ltr"] #sidebar {
             left: 0;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        html[dir="rtl"] #sidebar-wrapper {
+        html[dir="rtl"] #sidebar {
             right: 0;
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
         }
         
-        #sidebar-wrapper .sidebar-heading {
-            padding: 1.2rem 1rem;
-            font-size: 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        
-        #sidebar-wrapper .list-group {
-            width: 100%;
-        }
-        
-        .sidebar-link {
-            color: rgba(255, 255, 255, 0.8);
-            padding: 1rem;
+        .sidebar-brand {
+            padding: 1.25rem 1.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
             display: flex;
             align-items: center;
-            transition: all 0.3s ease;
+            justify-content: space-between;
+        }
+        
+        .sidebar-nav {
+            padding: 0;
+            list-style: none;
+        }
+        
+        .nav-item {
+            position: relative;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.8);
+            padding: 0.75rem 1.5rem;
+            display: flex;
+            align-items: center;
+            transition: all 0.3s;
             text-decoration: none;
         }
         
-        .sidebar-link:hover {
+        .nav-link:hover {
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
         }
         
-        .sidebar-link.active {
+        .nav-link.active {
             background-color: rgba(255, 255, 255, 0.2);
             color: white;
+        }
+        
+        html[dir="ltr"] .nav-link.active {
             border-left: 4px solid white;
         }
         
-        html[dir="rtl"] .sidebar-link.active {
-            border-left: none;
+        html[dir="rtl"] .nav-link.active {
             border-right: 4px solid white;
         }
         
-        .sidebar-link i {
-            margin-right: 0.75rem;
+        .nav-icon {
             width: 20px;
             text-align: center;
+            transition: margin 0.3s;
         }
         
-        html[dir="rtl"] .sidebar-link i {
-            margin-right: 0;
+        html[dir="ltr"] .nav-icon {
+            margin-right: 0.75rem;
+        }
+        
+        html[dir="rtl"] .nav-icon {
             margin-left: 0.75rem;
         }
         
         /* Main Content */
-        #page-content-wrapper {
-            min-width: 100vw;
-            padding: 0;
-            transition: margin-left 0.25s ease-out;
+        #main-content {
+            transition: all 0.3s;
+            min-height: calc(100vh - var(--topbar-height));
         }
         
-        html[dir="ltr"] #page-content-wrapper {
-            margin-left: 250px;
+        html[dir="ltr"] #main-content {
+            margin-left: var(--sidebar-width);
         }
         
-        html[dir="rtl"] #page-content-wrapper {
-            margin-right: 250px;
-            margin-left: 0;
+        html[dir="rtl"] #main-content {
+            margin-right: var(--sidebar-width);
         }
         
-        /* Navbar */
-        .top-navbar {
+        /* Top Navigation */
+        #top-nav {
+            height: var(--topbar-height);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 999;
             background-color: white;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+            transition: all 0.3s;
         }
         
-        .navbar-search .input-group {
-            width: 300px;
+        html[dir="ltr"] #top-nav {
+            left: 0;
+            padding-left: var(--sidebar-width);
+        }
+        
+        html[dir="rtl"] #top-nav {
+            right: 0;
+            padding-right: var(--sidebar-width);
+        }
+        
+        .navbar-search {
+            max-width: 400px;
         }
         
         /* Cards */
         .dashboard-card {
             border-radius: 0.35rem;
             border: none;
-            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
-            overflow: hidden;
-            transition: transform 0.3s ease;
+            box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
         }
         
         .dashboard-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-3px);
+            box-shadow: 0 0.5rem 1.5rem 0 rgba(58, 59, 69, 0.2);
+        }
+        
+        .card-icon {
+            font-size: 1.5rem;
+            opacity: 0.7;
         }
         
         /* Footer */
-        footer {
+        #main-footer {
             background-color: white;
-            padding: 1rem;
-            box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.05);
+            padding: 1.5rem;
+            box-shadow: 0 -0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
         }
         
-        /* Language switcher */
-        .lang-switcher {
-            cursor: pointer;
-            padding: 0.5rem;
-            border-radius: 4px;
-            transition: all 0.3s ease;
+        /* Breadcrumb */
+        .breadcrumb {
+            background-color: transparent;
+            padding: 0;
         }
         
-        .lang-switcher:hover {
-            background-color: rgba(0, 0, 0, 0.05);
+        /* Toggle Button */
+        #sidebarToggle {
+            border: none;
+            background: transparent;
+            color: var(--dark-color);
+            font-size: 1.25rem;
         }
         
-        /* Responsive adjustments */
-        @media (max-width: 768px) {
-            html[dir="ltr"] #sidebar-wrapper {
-                margin-left: -250px;
+        /* Dropdown Adjustments */
+        html[dir="rtl"] .dropdown-menu {
+            text-align: right;
+        }
+        
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            #sidebar {
+                transform: translateX(calc(var(--sidebar-width) * -1));
             }
             
-            html[dir="rtl"] #sidebar-wrapper {
-                margin-right: -250px;
+            html[dir="rtl"] #sidebar {
+                transform: translateX(var(--sidebar-width));
             }
             
-            html[dir="ltr"] #page-content-wrapper {
-                margin-left: 0;
+            #sidebar.show {
+                transform: translateX(0);
             }
             
-            html[dir="rtl"] #page-content-wrapper {
-                margin-right: 0;
+            #main-content {
+                margin-left: 0 !important;
+                margin-right: 0 !important;
             }
             
-            html[dir="ltr"] #sidebar-wrapper.show {
-                margin-left: 0;
+            #top-nav {
+                padding-left: 0 !important;
+                padding-right: 0 !important;
             }
-            
-            html[dir="rtl"] #sidebar-wrapper.show {
-                margin-right: 0;
-            }
-            
-            .navbar-search .input-group {
-                width: 100%;
-            }
+        }
+        
+        /* Animation */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.3s ease-in;
         }
     </style>
     
-    @yield('css')
+    @yield('styles')
 </head>
 <body>
-    <div class="d-flex" id="wrapper">
-        <!-- Sidebar -->
-        <div class="border-end" id="sidebar-wrapper">
-            <div class="sidebar-heading">{{ __('dashboard.app_name') }}</div>
-            <div class="list-group list-group-flush">
-                <a href="{{ route('dashboard') }}" class="sidebar-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
-                    <i class="fas fa-tachometer-alt"></i> {{ __('dashboard.dashboard') }}
-                </a>
-                <a href="{{ route('users.index') }}" class="sidebar-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
-                    <i class="fas fa-users"></i> {{ __('dashboard.users') }}
-                </a>
-                <a href="{{ route('about-us.index') }}" class="sidebar-link {{ request()->routeIs('about-us.*') ? 'active' : '' }}">
-                    <i class="fas fa-box"></i> {{ __('dashboard.about-us') }}
-                </a>
-                <a href="{{ route('contact.create') }}" class="sidebar-link {{ request()->routeIs('contact.*') ? 'active' : '' }}">
-                    <i class="fas fa-shopping-cart"></i> {{ __('dashboard.contact') }}
-                </a>
-                <a href="{{ route('services.index') }}" class="sidebar-link {{ request()->routeIs('services.*') ? 'active' : '' }}">
-                    <i class="fas fa-chart-line"></i> {{ __('dashboard.services') }}
-                </a>
-                <a href="{{ route('messages.create') }}" class="sidebar-link {{ request()->routeIs('messages.*') ? 'active' : '' }}">
-                    <i class="fas fa-cog"></i> {{ __('dashboard.messages') }}
-                </a>
-            </div>
+    <!-- Sidebar -->
+    <nav id="sidebar" class="d-print-none">
+        <div class="sidebar-brand d-flex align-items-center justify-content-between">
+            <span>{{ config('app.name') }}</span>
+            <button id="sidebarClose" class="btn btn-link text-white d-lg-none">
+                <i class="fas fa-times"></i>
+            </button>
         </div>
         
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <!-- Top Navbar -->
-            <nav class="navbar navbar-expand-lg navbar-light top-navbar py-3">
-                <div class="container-fluid">
-                    <button class="btn btn-link" id="menu-toggle">
-                        <i class="fas fa-bars"></i>
+        <ul class="sidebar-nav">
+            <li class="nav-item">
+                <a href="{{ route('dashboard') }}" class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-tachometer-alt"></i>
+                    <span>{{ __('dashboard.dashboard') }}</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="{{ route('users.index') }}" class="nav-link {{ request()->routeIs('users.*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-users"></i>
+                    <span>{{ __('dashboard.users') }}</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="{{ route('about-us.index') }}" class="nav-link {{ request()->routeIs('about-us.*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-info-circle"></i>
+                    <span>{{ __('dashboard.about_us') }}</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="{{ route('contact.index') }}" class="nav-link {{ request()->routeIs('contact.*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-envelope"></i>
+                    <span>{{ __('dashboard.contact') }}</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="{{ route('services.index') }}" class="nav-link {{ request()->routeIs('services.*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-concierge-bell"></i>
+                    <span>{{ __('dashboard.services') }}</span>
+                </a>
+            </li>
+             <li class="nav-item">
+                <a href="{{ route('missions.index') }}" class="nav-link {{ request()->routeIs('missions.*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-concierge-bell"></i>
+                    <span>{{ __('dashboard.missions') }}</span>
+                </a>
+            </li>
+            
+            <li class="nav-item">
+                <a href="{{ route('messages.index') }}" class="nav-link {{ request()->routeIs('messages.*') ? 'active' : '' }}">
+                    <i class="nav-icon fas fa-comments"></i>
+                    <span>{{ __('dashboard.messages') }}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    
+    <!-- Top Navigation -->
+    <nav id="top-nav" class="navbar navbar-expand-lg navbar-light bg-white">
+        <div class="container-fluid">
+            <button id="sidebarToggle" class="btn">
+                <i class="fas fa-bars"></i>
+            </button>
+            
+            <div class="d-flex align-items-center">
+                <!-- Language Switcher -->
+                <div class="dropdown me-3">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="languageDropdown" data-bs-toggle="dropdown">
+                        <i class="fas fa-globe me-1"></i>
+                        {{ app()->getLocale() == 'ar' ? 'العربية' : 'English' }}
                     </button>
-                    
-                    <div class="d-none d-md-block">
-                        <div class="input-group navbar-search">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="{{ __('dashboard.search_placeholder') }}" aria-label="Search">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search"></i>
-                            </button>
-                        </div>
-                    </div>
-                    
-                    <ul class="navbar-nav m-auto">
-                        <!-- Language Switcher -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="langDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                @if(app()->getLocale() == 'en')
-                                <i class="fas fa-globe"></i> English
-                                @else
-                                <i class="fas fa-globe"></i> العربية
-                                @endif
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('language.switch', 'en') }}">
+                                <i class="fas fa-language me-2"></i> English
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('language.switch', 'en') }}">
-                                        English
-                                    </a>
-                                </li>
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('language.switch', 'ar') }}">
-                                        العربية
-                                    </a>
-                                </li>
-                            </ul>
                         </li>
-                        
-                        <!-- Notifications Dropdown -->
-                        <!-- <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="notificationsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="fas fa-bell fa-fw"></i>
-                                <span class="badge bg-danger badge-counter">3+</span>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('language.switch', 'ar') }}">
+                                <i class="fas fa-language me-2"></i> العربية
                             </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="notificationsDropdown">
-                                <li><h6 class="dropdown-header">{{ __('dashboard.notifications_center') }}</h6></li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item d-flex align-items-center" href="#">
-                                        <div class="me-3">
-                                            <div class="bg-primary text-white rounded-circle p-2">
-                                                <i class="fas fa-file-alt"></i>
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div class="small text-gray-500">December 12, 2023</div>
-                                            <span>{{ __('dashboard.new_report_available') }}</span>
-                                        </div>
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <a class="dropdown-item text-center small text-gray-500" href="#">
-                                        {{ __('dashboard.show_all_notifications') }}
-                                    </a>
-                                </li>
-                            </ul>
-                        </li> -->
-                        
-                        <!-- User Information -->
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                <span class="d-none d-lg-inline text-gray-600 me-2">{{ auth()->user()->name ?? 'User Name' }}</span>
-                                <!-- <img class="img-profile rounded-circle" width="32" height="32" src="{{ asset('img/undraw_profile.svg') }}"> -->
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('profile.show') }}">
-                                        <i class="fas fa-user fa-sm fa-fw me-2 text-gray-400"></i>
-                                        {{ __('dashboard.profile') }}
-                                    </a>
-                                </li>
-                              
-                                <li>
-                                    <a class="dropdown-item" href="{{ route('logs.index') }}">
-                                        <i class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>
-                                        {{ __('dashboard.activity_log') }}
-                                    </a>
-                                </li>
-                                <li><hr class="dropdown-divider"></li>
-                                <li>
-                                    <form method="POST" action="{{ route('logout') }}">
-                                        @csrf
-                                        <button type="submit" class="dropdown-item">
-                                            <i class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>
-                                            {{ __('dashboard.logout') }}
-                                        </button>
-                                    </form>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
                 </div>
-            </nav>
-            
-            <!-- Main Content -->
-            <div class="container-fluid pt-4 px-4">
-                @yield('content')
+                
+                <!-- User Dropdown -->
+                <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown">
+                        <span class="me-2 d-none d-sm-inline">{{ Auth::user()->name }}</span>
+                        <i class="fas fa-user-circle fa-lg"></i>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li>
+                            <a class="dropdown-item" href="{{ route('profile.show') }}">
+                                <i class="fas fa-user me-2"></i>
+                                {{ __('dashboard.profile') }}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="{{ route('logs.index') }}">
+                                <i class="fas fa-history me-2"></i>
+                                {{ __('dashboard.activity_log') }}
+                            </a>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button type="submit" class="dropdown-item">
+                                    <i class="fas fa-sign-out-alt me-2"></i>
+                                    {{ __('dashboard.logout') }}
+                                </button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <div id="main-content" class="fade-in">
+        <div class="container-fluid py-4">
+            <!-- Page Heading -->
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800">@yield('title', __('dashboard.dashboard'))</h1>
+                @hasSection('breadcrumb')
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        @yield('breadcrumb')
+                    </ol>
+                </nav>
+                @endif
             </div>
             
-            <!-- Footer -->
-            <footer class="mt-5 text-center position-relative bottom-0">
-                <div class="container">
-                    <span>&copy; {{ date('Y') }} {{ __('dashboard.app_name') }}. {{ __('dashboard.all_rights_reserved') }}</span>
-                </div>
-            </footer>
+            <!-- Content -->
+            @yield('content')
         </div>
+        
+        <!-- Footer -->
+        <footer id="main-footer" class="mt-auto">
+            <div class="container-fluid">
+                <div class="d-flex align-items-center justify-content-between small">
+                    <div class="text-muted">
+                        &copy; {{ date('Y') }} {{ config('app.name') }}. {{ __('dashboard.all_rights_reserved') }}
+                    </div>
+                    <div>
+                        <span class="text-muted">v{{ config('app.version', '1.0.0') }}</span>
+                    </div>
+                </div>
+            </div>
+        </footer>
     </div>
     
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.8.0/chart.min.js"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     
+    <!-- Custom Scripts -->
     <script>
         // Toggle sidebar
-        document.getElementById('menu-toggle').addEventListener('click', function(e) {
-            e.preventDefault();
-            document.getElementById('sidebar-wrapper').classList.toggle('show');
+        document.getElementById('sidebarToggle').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.toggle('show');
         });
         
-        // Close sidebar on small screens when clicking outside
+        document.getElementById('sidebarClose').addEventListener('click', function() {
+            document.getElementById('sidebar').classList.remove('show');
+        });
+        
+        // Close sidebar when clicking outside on mobile
         document.addEventListener('click', function(event) {
-            const sidebar = document.getElementById('sidebar-wrapper');
-            const menuToggle = document.getElementById('menu-toggle');
+            const sidebar = document.getElementById('sidebar');
+            const toggleBtn = document.getElementById('sidebarToggle');
             
-            if (window.innerWidth < 768 && 
+            if (window.innerWidth < 992 && 
                 !sidebar.contains(event.target) && 
-                !menuToggle.contains(event.target) &&
+                !toggleBtn.contains(event.target) &&
                 sidebar.classList.contains('show')) {
                 sidebar.classList.remove('show');
             }
+        });
+        
+        // Handle RTL/LTR specific adjustments
+        function handleDirection() {
+            if (document.documentElement.dir === 'rtl') {
+                // RTL specific adjustments
+            } else {
+                // LTR specific adjustments
+            }
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            handleDirection();
         });
     </script>
     

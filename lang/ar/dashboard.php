@@ -6,12 +6,13 @@ return [
     'dashboard' => 'لوحة التحكم',
     'home' => 'الرئيسية',
     'users' => 'المستخدمين',
-    'about-us' => 'من نحن',
+    'about_us' => 'من نحن',
     'contact' => 'التواصل',
     'services' => ' الخدمات',
     'messages' => 'الرسائل',
     'all_rights_reserved' => 'جميع الحقوق محفوظة',
-    
+    "missions" => "المهام",
+    "mission" => "المهمة",
     // Search
     'search_placeholder' => 'ابحث عن...',
     
