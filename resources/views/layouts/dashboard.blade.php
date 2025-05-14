@@ -254,6 +254,7 @@
     @yield('styles')
 </head>
 <body>
+  
     <!-- Sidebar -->
     <nav id="sidebar" class="d-print-none">
         <div class="sidebar-brand d-flex align-items-center justify-content-between">
@@ -379,7 +380,6 @@
                 </nav>
                 @endif
             </div>
-            
             <!-- Content -->
             @yield('content')
         </div>

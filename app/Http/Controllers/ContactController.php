@@ -27,6 +27,8 @@ class ContactController extends Controller
             'instagram' => 'nullable|url',
             'linkedin' => 'nullable|url',
             'twitter' => 'nullable|url',
+            'googleplaylink' => 'nullable|url',
+            'appstorelink' => 'nullable|url',
         ]);
 
         ContactInfo::create($data);
@@ -34,7 +36,7 @@ class ContactController extends Controller
         return redirect()->route('contact.index')->with('success', 'تم الحفظ بنجاح');
     }
 
-    public function edit(Contact $contact)
+    public function edit(ContactInfo $contact)
     {
         return view('dashboard.contact.edit', compact('contact'));
     }
@@ -49,6 +51,8 @@ class ContactController extends Controller
             'instagram' => 'nullable|url',
             'linkedin' => 'nullable|url',
             'twitter' => 'nullable|url',
+            'googleplaylink' => 'nullable|url',
+            'appstorelink' => 'nullable|url',
         ]);
 
         $contact->update($data);

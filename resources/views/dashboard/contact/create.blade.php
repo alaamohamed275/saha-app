@@ -41,7 +41,13 @@
             <label>رابط تويتر</label>
             <input type="url" name="twitter" class="form-control" dir="rtl">
         </div>
-
+        <div class="form-group">
+            <label>رابط متجر جوجل بلاي</label>
+            <input type="url" name="googleplaylink" class="form-control" dir="rtl">   
+        </div>
+        <div class="form-group">
+            <label>رابط متجر آبل</label>
+            <input type="url" name="appstorelink" class="form-control" dir="rtl">  
         <button type="submit" class="btn btn-success mt-3">حفظ</button>
     </form>
 </div>

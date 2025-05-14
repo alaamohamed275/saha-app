@@ -16,10 +16,11 @@
             <div class="col-md-6 col-lg-3 text-md-end text-center">
                 <h5 class="mb-3">تنزيل التطبيق</h5>
                 <div class="mb-3">
-                    <img src="/images/AppleStore.png" alt="App Store" class="store-badge">
+                    <a href="{{ $contact->googleplaylink }}"> <img src="/images/AppleStore.png" alt="App Store" class="store-badge"></a>
+                   
                 </div>
                 <div>
-                    <img src="/images/PlaySotre.png" alt="Google Play" class="store-badge">
+                   <a href="{{ $contact->appstorelink }}"><img src="/images/PlaySotre.png" alt="Google Play" class="store-badge"></a> 
                 </div>
             </div>
 

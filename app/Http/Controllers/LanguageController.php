@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Session;
 
 class LanguageController extends Controller
 {
-     public function switch($locale)
+    public function switch($locale)
     {
         // Validate if the locale is supported
         if (!in_array($locale, ['en', 'ar'])) {
-            $locale = 'en'; // Default to English if not supported
+            $locale = 'ar'; 
         }
 
         // Store the locale in session
@@ -20,7 +20,7 @@ class LanguageController extends Controller
         
         // Set the application locale
         App::setLocale($locale);
-
+        
         return redirect()->back();
     }
 }

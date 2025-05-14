@@ -42,6 +42,14 @@
             <label>رابط تويتر</label>
             <input type="url" name="twitter" value="{{ $contact->twitter }}" class="form-control" dir="rtl">
         </div>
+        <div class="form-group">
+            <label>رابط متجر جوجل بلاي</label>
+            <input type="url" name="googleplaylink" value="{{ $contact->googleplaylink }}" class="form-control" dir="rtl">  
+        </div>  
+        <div class="form-group">
+            <label>رابط متجر آبل</label>
+            <input type="url" name="appstorelink" value="{{ $contact->appstorelink }}" class="form-control" dir="rtl">  
+        </div>
 
         <button type="submit" class="btn btn-primary mt-3">تحديث</button>
     </form>

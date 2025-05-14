@@ -37,7 +37,14 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
         $this->middleware('auth')->only('logout');
     }
-
+        protected function authenticated(Request $request, $user)
+        {
+            // Preserve the locale after login
+            $request->session()->put('locale', 'ar'); // Default to Arabic
+            app()->setLocale('ar');
+            
+            return redirect()->intended($this->redirectPath());
+        }
     protected function loggedOut(Request $request)
     {
         return redirect('/login'); // or route('login')
